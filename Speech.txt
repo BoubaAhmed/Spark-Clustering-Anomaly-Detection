@@ -1,0 +1,53 @@
+
+**Slide 1 : Page de Titre**  
+"Bonjour à toutes et à tous ! Je suis ravi de vous présenter mon projet intitulé **Détection Automatique de Fichiers CSV Aberrants avec Spark Clustering**, réalisé dans le cadre de mon année universitaire 2024-2025. Ce travail a été encadré par le Professeur Younes Hajoui. L’objectif ? Combattre un problème critique dans l’industrie : les fichiers CSV corrompus qui perturbent les analyses de données. Plongeons ensemble dans les détails de cette solution innovante !"
+
+---
+
+**Slide 2 : Contexte et Objectifs**  
+"Imaginez une usine où **13% des fichiers CSV** générés par des capteurs sont corrompus : valeurs extrêmes, données manquantes, ou formats erronés. Ces anomalies faussent les analyses et coûtent cher en maintenance. Mon objectif était donc de créer un **pipeline Big Data automatisé** pour détecter ces fichiers aberrants, en combinant **Apache Spark**, **DBSCAN**, et **HDFS**.  
+
+Trois axes principaux :  
+1️⃣ Automatiser la détection en batch *et* en streaming.  
+2️⃣ Intégrer des algorithmes de clustering adaptatifs comme DBSCAN.  
+3️⃣ Générer des rapports pour une maintenance prédictive efficace.  
+
+C’est une réponse technologique à un problème industriel concret."
+
+---
+
+**Slide 3 : Architecture Globale**  
+"Voici l’architecture du pipeline, conçue pour être **scalable** et **robuste** :  
+- **HDFS** stocke les fichiers bruts (23 CSV de 600-700 lignes chacun).  
+- **Spark** nettoie les données : suppression des lignes incomplètes et filtrage des valeurs extrêmes via des plages dynamiques.  
+- **DBSCAN** identifie les anomalies grâce à un clustering adaptatif.  
+- **Spark Structured Streaming** traite les données en temps réel avec une latence de 45 secondes.  
+
+Le flux est clair : les fichiers bruts sont nettoyés, transformés en features, clusterisés, et surveillés en continu. Tout est orchestré pour minimiser l’intervention humaine."
+
+---
+
+**Slide 4 : Étapes Clés du Pipeline**  
+"Zoomons sur les étapes techniques :  
+1. **Nettoyage** : Spark supprime les lignes incomplètes (`df.na.drop()`) et filtre les outliers en utilisant les **quantiles 1%-99%**, pour éviter les fausses anomalies.  
+2. **Feature Engineering** : Agrégation des moyennes par fichier sur 20 colonnes, transformées en vecteurs via `VectorAssembler`.  
+3. **Clustering DBSCAN** : Après normalisation des données, nous détectons automatiquement le paramètre **eps** (la distance critique) avec la **méthode du coude**. *(Montrer l’extrait de code)* : Cette approche évite de fixer eps manuellement, ce qui rend le modèle adaptable.  
+4. **Streaming** : Simulation de flux en temps réel avec un bruit Gaussien (2% d’écart-type), traité par micro-batches toutes les 45 secondes."
+
+---
+
+**Slide 5 : Résultats et Performances**  
+"Passons aux résultats concrets :  
+- **Débit** : 23 fichiers traités par minute avec 4 exécuteurs Spark.  
+- **Précision** : 89% des anomalies synthétiques détectées (marge d’erreur ±3%).  
+- **Latence** : 48 secondes en moyenne par batch, idéal pour un monitoring quasi-temps réel.  
+- **Ressources** : Utilisation mémoire stable à 3.9 Go par exécuteur, garantissant une exécution fiable.  
+
+Ces chiffres prouvent que le pipeline est **efficace**, **rapide**, et adapté à des environnements industriels exigeants."
+
+---
+
+**Slide 6 : Conclusion**
+"Pour résumer, ce projet démontre qu’il est possible de **détecter automatiquement des fichiers CSV aberrants** grâce à une combinaison intelligente de Spark, de clustering, et de streaming. Les avantages ? Réduction des coûts de maintenance, scalabilité, et adaptabilité à différents scénarios industriels.  
+
+Je vous remercie pour votre attention ! Je suis maintenant disponible pour répondre à vos questions .
